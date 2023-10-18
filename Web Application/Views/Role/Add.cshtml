@@ -1,0 +1,67 @@
+﻿@using ViewModel;
+@model AddRoleVeiwModel;
+@{
+    Layout = null;
+    var data= ViewData["Data"] as List<AddRoleVeiwModel>;
+}
+
+
+<!Doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <title>Website Roles</title>
+</head>
+<body>
+    <div class="container">
+        <form asp-action="Add" asp-controller="Role" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Role</button>
+        </form>
+        @if(ViewBag.Success== 1)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <h4 class="alert-heading">Well done!</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <p>you successfully Add new Role to Website </p>
+            </div>
+        }
+        else if (ViewBag.Success == 2)
+        {
+            <div class="alert alert-danger  alert-dismissible" role="alert">
+                <h4 class="alert-heading">Sorry Someting happend!</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <p>you cant Add this Role to Website </p>
+            </div>
+        }
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in data)
+                {
+                    <tr>
+                        <th scope="row">@item.ID</th>
+                        <td>@item.Name</td>
+                        <td></td>
+                    </tr>
+                    
+                }
+                
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

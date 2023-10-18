@@ -1,0 +1,71 @@
+﻿@using ViewModel;
+@using Repository;
+@model UserSignUpViewModel;
+@{
+    Layout = null;
+    var list = ViewData["list"] as List<SelectListItem>;
+}
+
+
+<!Doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="container">
+
+        <h1 class="display-1">Join our Community :)</h1>
+        <form asp-action="SignUp" asp-controller="Account" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label"></label>
+                <input asp-for="FirstName" class="form-control">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label"></label>
+                <input asp-for="LastName" class="form-control">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control">
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NationalID" class="form-label"></label>
+                <input asp-for="NationalID" class="form-control">
+                <span asp-validation-for="NationalID" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" >
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" >
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Role" class="form-label"></label>
+                <select asp-for="Role" class="form-control" asp-items="list" ></select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign up</button>
+        </form>
+    </div>
+</body>
+</html>

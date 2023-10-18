@@ -1,0 +1,49 @@
+﻿@using ViewModel;
+@model PaginationViewModel<List<ProductVeiwModel>>;
+@{
+    var categories = ViewData["Categories"] as List<SelectListItem>;
+    bool movenext = true;
+    bool moveback = true;
+    int from = ((Model.PageIndex - 1) * Model.PageSize) + 1;
+    int to = ((Model.PageIndex * Model.PageSize) > Model.Count) ? Model.Count : Model.PageIndex * Model.PageSize;
+}
+
+<h1 class="display-1 mb-2">Explore Our Products</h1>
+@section Sidebar{
+    <form asp-action="Search" asp-controller="Product" method="get">
+        <input class="form-control" name="Name" type="text" placeholder="Search By Name" />
+        <input class="form-control" name="Price" type="number" value="0" placeholder="Search By Price" />
+        <select class="form-control" name="CategoryID" asp-items="@categories">
+            <option value="0" selected disabled>Choose Category</option>
+        </select>
+        <button class="btn btn-info" type="submit">Apply Filter</button>
+    </form>
+}
+<p class="lead">Your Search Result From @from To @to  Of @(Model.Count) </p>
+
+<div class="row">
+    @foreach (ProductVeiwModel item in Model.Data)
+    {
+        <div class="card col-4">
+            @if (@item.Images.Count == 0)
+            {
+                <img src="/Images/notfound.png" class="card-img-top" alt="...">
+            }
+            else
+            {
+                <img src="/Images/@item.Images.FirstOrDefault()" class="card-img-top" alt="...">
+            }
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@item.Price $</p>
+                <p class="card-text">@item.CategoryName</p>
+                <a asp-controller="product" asp-action="getone" asp-route-id="@item.ID" asp-route-name="ITI" class="btn btn-primary">See Details</a>
+                <a asp-controller="product" asp-action="edit" asp-route-id="@item.ID" class="btn btn-warning">Update</a>
+                <a asp-controller="product" asp-action="delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+
+<a class="btn btn-info" asp-action="Search" asp-controller="Product" asp-route-PageSize="6" asp-route-PageIndex="@(Model.PageIndex-1)" disabled="@moveback">Back</a>
+<a class="btn btn-info" asp-action="Search" asp-controller="Product" asp-route-PageSize="6" asp-route-PageIndex="@(Model.PageIndex+1)" disabled="@movenext">Next</a>

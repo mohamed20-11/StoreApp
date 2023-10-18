@@ -1,0 +1,83 @@
+﻿@using ViewModel;
+@model AddProductViewModel
+@{
+    List<SelectListItem> temp = ViewData["Categories"] as List<SelectListItem>;
+}
+
+<h1 class="display-1">Edit Product @Model.Name</h1>
+
+<form id="form" asp-action="Edit" asp-controller="product" method="post" enctype="multipart/form-data">
+    <input asp-for="ID" hidden />
+    <input asp-for="KeepImages" id="KeepImages" hidden />
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control">
+        <span asp-validation-for="Price" class="text-danger"></span>
+
+    </div>
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label"></label>
+        <input asp-for="Quantity" class="form-control">
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"> </textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+
+    </div>
+    <div class="mb-3">
+        <label asp-for="CategoryID" class="form-label"></label>
+        <select asp-for="CategoryID" asp-items="temp" class="form-control">
+        </select>
+        <span asp-validation-for="CategoryID" class="text-danger"></span>
+    </div>
+    <div id="SeeOldImages">
+        <h1 class="lead">Old Images</h1>
+        <p class="text-muted">
+            these images will still your Product images by default if you want to remove them click Here
+            <span class="btn btn-danger" onclick="remove()">Remove</span>
+        </p>
+        <div class="d-flex">
+            @foreach (string img in Model.ImagesURL)
+            {
+                <img src="/images/@img" height="200px" />
+            }
+        </div>
+    </div>
+    <div id="Undo" style="display:none">
+        <h1 class="lead">
+            Thanks your Product old images will be removed if you want to Undo this click Here
+            <span class="btn btn-info" onclick="remove()">Undo</span>
+        </h1>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Images" class="form-label"></label>
+        <input asp-for="Images" class="form-control" multiple>
+        <span asp-validation-for="Images" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+@section ScriptingSection{
+    <script>
+        function remove() {
+            let KeepImages = document.getElementById("KeepImages")
+            KeepImages.checked = !KeepImages.checked
+            if (KeepImages.checked == false) {
+                document.getElementById("SeeOldImages").style.display = "none"
+                document.getElementById("Undo").style.display = "block"
+            }
+            else {
+                document.getElementById("SeeOldImages").style.display = "block"
+                document.getElementById("Undo").style.display = "none"
+            }
+            console.log(KeepImages.checked)
+        }
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿
+@using ViewModel;
+@using Web_Application.Models;
+@model ProductVeiwModel;
+@{
+    UserDataModel user = ViewData["UserData"] as UserDataModel;
+
+}
+
+@section ScriptingSection{
+    <script>
+        let list = document.getElementsByClassName("carousel-item")
+        list[0].classList.add("active")
+    </script>
+}
+<h1 class="lead mb-2 red">Welcome @user.Name</h1>
+
+@section Sidebar{
+    <p class="lead mt-5">@Model.CategoryName</p>
+    <p class="lead mt-2">@Model.Price $</p>
+    <p class="lead mt-2">@Model.Description</p>
+}
+<h1 class="display-1">Product @Model.Name Details</h1>
+@if (Model.Images.Count > 0)
+{
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            @foreach (var item in Model.Images)
+            {
+                <div class="carousel-item">
+                    <img src="/Images/@item" class="d-block w-100" alt="...">
+                </div>
+
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+}
+else
+{
+    <div class="lead">No Images Provied</div>
+}

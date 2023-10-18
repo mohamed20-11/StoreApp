@@ -1,0 +1,90 @@
+﻿@{
+    var temp2 = User.Claims;
+    var temp =  User.Identities;
+}
+<!Doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <title>@ViewBag.Title</title>
+    @RenderSection("StylingSection",false)
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home/index">E-Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-action="index" asp-controller="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-route="Contactus" >Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Aboutus">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Product" asp-action="index">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Product" asp-action="Search">Search</a>
+                    </li>
+                    @if (User.HasClaim(i => i.Value == "Vendor" || i.Value == "Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Product" asp-action="Add">Add Product</a>
+                        </li>
+                        
+                    }
+
+                    @if (User.Identity.Name == null){
+
+                        <li class="nav-item">
+                            <a class="btn btn-info" asp-controller="Account" asp-action="Signin">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-success" asp-controller="Account" asp-action="Signup">Sign Up</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <span>Welcome @User.Identity.Name</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="SignOut">Sign Out</a>
+                        </li>
+                        
+                    }
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-3 bg-light text-dark">
+                @RenderSection("Sidebar",false)
+            </div>
+            <div class="col-9">
+                @RenderBody()
+            </div>
+
+        </div>
+    </main>
+    <footer class="container">
+        <div class="text-center">
+            Copyrights &copy; - @DateTime.Now.Year
+        </div>
+    </footer>
+    <script src="/bootstrap/js/bootstrap.bundle.js"></script>
+    @RenderSection("ScriptingSection",false)
+
+</body>
+</html>

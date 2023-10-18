@@ -1,0 +1,29 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+
+/.vs
+/Models/bin
+/Models/obj
+/Web Application/bin
+/Web Application/obj
+/Repository/bin
+/Repository/obj
+/ViewModel/bin
+/ViewModel/obj
+/ViewModel/bin/Debug/net7.0/ViewModel.dll
+/ViewModel/bin/Debug/net7.0/ViewModel.pdb
+/ViewModel/obj/Debug/net7.0/ref/ViewModel.dll
+/ViewModel/obj/Debug/net7.0/refint/ViewModel.dll
+/ViewModel/obj/Debug/net7.0/ViewModel.dll
+/ViewModel/obj/Debug/net7.0/ViewModel.pdb
+/ViewModel/bin/Debug/net7.0/Models.dll
+/ViewModel/bin/Debug/net7.0/Models.pdb
+/ViewModel/bin/Debug/net7.0/ViewModel.deps.json
+/ViewModel/obj/Debug/net7.0/ViewModel.assets.cache
+/ViewModel/obj/Debug/net7.0/ViewModel.csproj.AssemblyReference.cache
+/ViewModel/obj/Debug/net7.0/ViewModel.csproj.CoreCompileInputs.cache
+/ViewModel/obj/ViewModel.csproj.nuget.dgspec.json
+/ViewModel/obj/project.nuget.cache
+/ViewModel/obj/project.assets.json

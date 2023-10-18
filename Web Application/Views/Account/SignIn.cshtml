@@ -1,0 +1,38 @@
+﻿@using ViewModel;
+@model UserSignInViewModel;
+@{
+    Layout = null;
+}
+
+<!Doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <title>Sign In</title>
+</head>
+<body>
+    <div class="container">
+
+        <h1 class="display-1">Welcome Back :)</h1>
+        <form asp-action="SignIn" asp-controller="Account" method="post">
+            <div asp-validation-summary="All"></div>
+            @* <input asp-for="ReturnUrl" value="@Model.ReturnUrl" disabled/> *@
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control">
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3 row">
+                <input asp-for="RememberMe" class="form-check col-1">
+                <label asp-for="RememberMe" class="form-label col-11"></label>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+    </div>
+</body>
+</html>

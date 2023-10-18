@@ -1,0 +1,46 @@
+﻿@using Models;
+@using ViewModel;
+@using Web_Application.Models;
+@model List<ProductVeiwModel>
+
+@{
+    List<string> temp = ViewData["Categories"] as List<string>;
+    UserDataModel user = ViewData["UserData"] as UserDataModel;
+}
+
+<h1 class="display-1 mb-2">Explore Our Products</h1>
+@section Sidebar{
+    <h1 class="lead mb-2">Welcome @user.Name</h1>
+    @foreach (var item in temp)
+    {
+    <p class="lead">@item</p>  
+    }
+}
+
+<div class="row">
+    @foreach (ProductVeiwModel item in Model)
+    {
+        <div class="card col-4">
+            @if (@item.Images.Count == 0)
+            {
+                <img src="/Images/notfound.png" class="card-img-top" alt="...">
+            }
+            else
+            {
+            <img src="/Images/@item.Images.FirstOrDefault()" class="card-img-top" alt="...">
+            }
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@item.Price $</p>
+                <p class="card-text">@item.CategoryName</p>
+                <a asp-controller="product" asp-action="getone" asp-route-id="@item.ID" asp-route-name="ITI" class="btn btn-primary">See Details</a>
+                <a asp-controller="product" asp-action="edit" asp-route-id="@item.ID" class="btn btn-warning">Update</a>
+                <a asp-controller="product" asp-action="delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+
+@section StylingSection{
+    <link rel="stylesheet" href="/css/product.css" />
+}
