@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Models;
 using Repository;
 using Repository.Helpers;
+using System.Data;
 using Web_Application;
 
 public class Program
@@ -38,12 +39,16 @@ public class Program
         });
 
         builder.Services.AddIdentity<User, IdentityRole>(i => {
+            i.Lockout.MaxFailedAccessAttempts = 2;
+            i.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
             i.User.RequireUniqueEmail = true;
             i.SignIn.RequireConfirmedPhoneNumber = false;
             i.SignIn.RequireConfirmedEmail = false;
             i.SignIn.RequireConfirmedAccount = false;
-            })
-            .AddEntityFrameworkStores<MyDBContext>();
+            i.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+        })
+            .AddEntityFrameworkStores<MyDBContext>()
+            .AddDefaultTokenProviders();
         builder.Services.Configure<IdentityOptions>(i =>
         {
             i.Password.RequireNonAlphanumeric = false;

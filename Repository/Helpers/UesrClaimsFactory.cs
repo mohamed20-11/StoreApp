@@ -10,13 +10,15 @@ using Models;
 
 namespace Repository.Helpers
 {
-    public class UesrClaimsFactory : UserClaimsPrincipalFactory<User>
+    public class UesrClaimsFactory : UserClaimsPrincipalFactory<User,IdentityRole>
     {
         UserManager<User> userManager;
+
         public UesrClaimsFactory(
             UserManager<User> _userManager, 
-            IOptions<IdentityOptions> optionsAccessor
-            ) : base(_userManager, optionsAccessor)
+            RoleManager<IdentityRole> roleManager, 
+            IOptions<IdentityOptions> options) 
+            : base(_userManager, roleManager, options)
         {
             userManager = _userManager;
         }

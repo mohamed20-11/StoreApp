@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Repository;
+using System.Net.Mail;
+using System.Net;
+using System.Security.Claims;
 using ViewModel;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Web_Application.Controllers
 {
@@ -62,6 +67,11 @@ namespace Web_Application.Controllers
                 {
                     return RedirectToAction("Index", "Product");
                 }
+                else if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Your Account is Under Reivew");
+                    return View();
+                }
                 else
                 {
                     ModelState.AddModelError("", "Invaild User Name Or Password");
@@ -75,6 +85,90 @@ namespace Web_Application.Controllers
         {
              accManger.SignOut();
             return RedirectToAction("SignIn");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            
+            ViewBag.Success = false;
+            return View();
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(UserChangePasswordViewModel viewModel)
+        {
+            viewModel.Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ModelState.IsValid)
+            {
+                var result = await accManger.ChangePassword(viewModel);
+                if (result.Succeeded)
+                {
+                     ViewBag.Success = true;
+                }
+                return View();
+            }
+            ViewBag.Success = false;
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            ViewBag.Success = false;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string Email)
+        {
+            if(!string.IsNullOrEmpty(Email))
+            {
+               string code= await accManger.GetForgotPasswordCode(Email);
+                if (string.IsNullOrEmpty(code))
+                {
+                    ViewBag.Success = false;
+                }
+                else
+                {
+                    //Send Mail With Code
+                    var client = new SmtpClient("sandbox.smtp.mailtrap.io", 2525)
+                    {
+                        Credentials = new NetworkCredential("dfeb7400a34af3", "bebc3fd59ccb80"),
+                        EnableSsl = true
+                    };
+                    client.Send("from@example.com", Email, "Forget Password Verification", $"Your Code is {code}");
+                    ViewBag.Success = true;
+                }
+                return View();
+            }
+            ViewBag.Success = false;
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ForgotPasswordVerification()
+        {
+            ViewBag.Success = false;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPasswordVerification(UserForgotPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await accManger.ForgotPassword(viewModel);
+                if (!result.Succeeded)
+                {
+                    ViewBag.Success = false;
+                }
+                else
+                {
+                    ViewBag.Success = true;
+                }
+                return View();
+            }
+            ViewBag.Success = false;
+            return View();
         }
         private List<SelectListItem> RoleList()
         {

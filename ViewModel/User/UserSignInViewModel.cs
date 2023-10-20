@@ -24,6 +24,6 @@ namespace ViewModel
 
         [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; } = false;
-        public string ReturnUrl { get; set; }
+        //public string ReturnUrl { get; set; }
     }
 }

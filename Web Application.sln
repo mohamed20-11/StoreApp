@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web Application", "Web Application\Web Application.csproj", "{5AEBD11C-E85E-4C4B-9443-F9EC77B5173C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyStoreMVC", "Web Application\MyStoreMVC.csproj", "{5AEBD11C-E85E-4C4B-9443-F9EC77B5173C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{8DE7E137-8108-4C19-956B-755D2246E467}"
 EndProject
